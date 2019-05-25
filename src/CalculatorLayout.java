@@ -1,12 +1,15 @@
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 /*
  * 实现计算器的布局
  */
@@ -17,6 +20,9 @@ class CalculatorLayout extends JFrame {
 	JTextField jtf=new JTextField(20);//文本框初始化
 	String[] c= {"时间","删除","归零","7","8","9","%","+","4","5","6","-","1","2","3","x","0",".","=","/"};//字符数组
 	Button[] b=new Button[20];//键盘数组
+	Listener l=new Listener();//监听器
+	
+	String display;
 	
 	public CalculatorLayout() {
 		//jpl3--5行4列
@@ -26,6 +32,7 @@ class CalculatorLayout extends JFrame {
 			Button btn=new Button(c[i]);
 			b[i]=btn;
 			jpl_3.add(b[i]);
+			addButtonListener(b[i],l);
 		}
 
 		
@@ -45,4 +52,20 @@ class CalculatorLayout extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);//关闭
 	}
 
+		public void addButtonListener(Button btn,Listener lis) {
+			btn.addActionListener(lis);
+		}
+		
+		class Listener implements ActionListener{
+
+			String s=null;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				s=e.getActionCommand();	
+				display=jtf.getText()+s;
+				jtf.setText(display);
+			}
+		
+		}
 }
